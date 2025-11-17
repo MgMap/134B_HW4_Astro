@@ -1,0 +1,128 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  date?: string;
+  tags?: string[];
+}
+
+const { title, description, href, date, tags } = Astro.props;
+---
+
+<article class="card">
+  <a href={href} class="card-link">
+    <div class="card-content">
+      <h3 class="card-title">{title}</h3>
+      {date && (
+        <time class="card-date" datetime={date}>
+          {new Date(date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </time>
+      )}
+      <p class="card-description">{description}</p>
+      {tags && tags.length > 0 && (
+        <div class="card-tags">
+          {tags.map((tag) => (
+            <span class="card-tag">{tag}</span>
+          ))}
+        </div>
+      )}
+    </div>
+    <div class="card-arrow">→</div>
+  </a>
+</article>
+
+<style>
+  .card {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-color: var(--color-accent);
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1.5rem;
+    height: 100%;
+  }
+
+  .card-content {
+    flex: 1;
+  }
+
+  .card-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+    transition: color 0.3s ease;
+  }
+
+  .card:hover .card-title {
+    color: var(--color-accent);
+  }
+
+  .card-date {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .card-description {
+    color: var(--color-text);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .card-tag {
+    background: var(--color-accent-light);
+    color: var(--color-accent);
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .card-arrow {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-left: 1rem;
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover .card-arrow {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 768px) {
+    .card-link {
+      padding: 1rem;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+    }
+  }
+</style>

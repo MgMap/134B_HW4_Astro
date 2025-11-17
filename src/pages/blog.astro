@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/Card.astro';
+
+const allPosts = [
+  {
+    title: 'Getting Started with Astro',
+    description: 'Learn how to build lightning-fast static sites with Astro, the modern web framework that ships zero JavaScript by default.',
+    href: '/blog/getting-started-with-astro',
+    date: '2025-11-16',
+    tags: ['Astro', 'Web Development', 'Tutorial']
+  },
+  {
+    title: 'Modern CSS Layout Techniques',
+    description: 'Explore powerful CSS layout tools like Grid and Flexbox to create responsive, beautiful web designs without JavaScript.',
+    href: '/blog/modern-css-layout',
+    date: '2025-11-16',
+    tags: ['CSS', 'Design', 'Layout']
+  },
+  {
+    title: 'JavaScript ES2024 Features',
+    description: 'Discover the latest features in JavaScript ES2024 and how they can improve your code quality and developer experience.',
+    href: '/blog/javascript-es2024',
+    date: '2025-11-16',
+    tags: ['JavaScript', 'ES2024', 'Features']
+  },
+  {
+    title: 'Understanding Git and Version Control',
+    description: 'Master Git fundamentals and learn best practices for version control in modern software development teams.',
+    href: '/blog/understanding-git',
+    date: '2025-11-16',
+    tags: ['Git', 'Version Control', 'Development']
+  },
+  {
+    title: 'Working with REST APIs',
+    description: 'Learn how to consume and build RESTful APIs, including authentication, error handling, and best practices.',
+    href: '/blog/working-with-rest-apis',
+    date: '2025-11-16',
+    tags: ['APIs', 'REST', 'Backend']
+  },
+  {
+    title: 'Web Performance Optimization',
+    description: 'Practical techniques to make your websites faster, from image optimization to code splitting and lazy loading.',
+    href: '/blog/web-performance-optimization',
+    date: '2025-11-16',
+    tags: ['Performance', 'Optimization', 'Best Practices']
+  }
+];
+---
+
+<BaseLayout
+  title="Blog"
+  description="Explore tutorials, guides, and articles about modern web development"
+>
+  <section class="blog-header">
+    <div class="container">
+      <h1>Blog</h1>
+      <p>Tutorials, guides, and insights on modern web development</p>
+    </div>
+  </section>
+
+  <section class="blog-posts section">
+    <div class="container">
+      <div class="posts-grid">
+        {allPosts.map((post) => (
+          <Card
+            title={post.title}
+            description={post.description}
+            href={post.href}
+            date={post.date}
+            tags={post.tags}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+  }
+
+  .blog-header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .blog-header p {
+    font-size: 1.3rem;
+    opacity: 0.95;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .blog-header h1 {
+      font-size: 2rem;
+    }
+
+    .blog-header p {
+      font-size: 1.1rem;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

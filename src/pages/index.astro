@@ -1,16 +1,231 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/Card.astro';
 
+// In a real app, this would come from the content collection
+const featuredPosts = [
+  {
+    title: 'Getting Started with Astro',
+    description: 'Learn how to build lightning-fast static sites with Astro, the modern web framework that ships zero JavaScript by default.',
+    href: '/blog/getting-started-with-astro',
+    date: '2025-11-16',
+    tags: ['Astro', 'Web Development', 'Tutorial']
+  },
+  {
+    title: 'Modern CSS Layout Techniques',
+    description: 'Explore powerful CSS layout tools like Grid and Flexbox to create responsive, beautiful web designs without JavaScript.',
+    href: '/blog/modern-css-layout',
+    date: '2025-11-16',
+    tags: ['CSS', 'Design', 'Layout']
+  },
+  {
+    title: 'JavaScript ES2024 Features',
+    description: 'Discover the latest features in JavaScript ES2024 and how they can improve your code quality and developer experience.',
+    href: '/blog/javascript-es2024',
+    date: '2025-11-16',
+    tags: ['JavaScript', 'ES2024', 'Features']
+  }
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Home">
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero-title">Welcome to Tech Learning Hub</h1>
+      <p class="hero-subtitle">
+        Your comprehensive resource for modern web development. Learn Astro, JavaScript, CSS, and more through practical tutorials and in-depth guides.
+      </p>
+      <div class="hero-buttons">
+        <a href="/blog" class="btn btn-primary">Explore Blog</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="featured section">
+    <div class="container">
+      <h2 class="section-title">Featured Articles</h2>
+      <div class="posts-grid">
+        {featuredPosts.map((post) => (
+          <Card
+            title={post.title}
+            description={post.description}
+            href={post.href}
+            date={post.date}
+            tags={post.tags}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Start Learning Today</h2>
+        <p>Join thousands of developers building faster, better websites with modern web technologies.</p>
+        <a href="/blog" class="btn btn-accent">View All Articles</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 6rem 0;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  .hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+    opacity: 0.95;
+    animation: fadeIn 1s ease-out 0.2s both;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    animation: fadeIn 1.2s ease-out 0.4s both;
+  }
+
+  .btn {
+    padding: 0.875rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .btn-primary {
+    background: white;
+    color: #764ba2;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+  }
+
+  .btn-secondary:hover {
+    background: white;
+    color: #764ba2;
+  }
+
+  .btn-accent {
+    background: var(--color-accent);
+    color: white;
+  }
+
+  .btn-accent:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--color-primary);
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .cta {
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .cta-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-primary);
+  }
+
+  .cta-content p {
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 4rem 0;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .cta-content h2 {
+      font-size: 2rem;
+    }
+
+    .cta-content p {
+      font-size: 1rem;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

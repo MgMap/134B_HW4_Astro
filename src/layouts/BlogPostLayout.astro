@@ -1,0 +1,173 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import AuthorBio from '../components/AuthorBio.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    publishDate: string;
+    author: string;
+    authorRole: string;
+    authorBio: string;
+    tags: string[];
+  };
+}
+
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+  <article class="blog-post">
+    <header class="post-header">
+      <h1>{frontmatter.title}</h1>
+      <div class="post-meta">
+        <time datetime={frontmatter.publishDate}>
+          {new Date(frontmatter.publishDate).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </time>
+        <span class="author">by {frontmatter.author}</span>
+      </div>
+      {frontmatter.tags && (
+        <div class="tags">
+          {frontmatter.tags.map((tag) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <div class="post-content">
+      <slot />
+    </div>
+
+    <AuthorBio
+      name={frontmatter.author}
+      role={frontmatter.authorRole}
+      bio={frontmatter.authorBio}
+    />
+  </article>
+</BaseLayout>
+
+<style>
+  .blog-post {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .post-header {
+    margin-bottom: 3rem;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 2rem;
+  }
+
+  .post-header h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: var(--color-primary);
+  }
+
+  .post-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .post-meta time {
+    font-weight: 500;
+  }
+
+  .tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    background: var(--color-accent-light);
+    color: var(--color-accent);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .post-content {
+    line-height: 1.8;
+    font-size: 1.1rem;
+  }
+
+  .post-content :global(h2) {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    color: var(--color-secondary);
+  }
+
+  .post-content :global(h3) {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.4rem;
+    color: var(--color-secondary);
+  }
+
+  .post-content :global(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  .post-content :global(code) {
+    background: var(--color-code-bg);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.9em;
+    font-family: 'Courier New', monospace;
+  }
+
+  .post-content :global(pre) {
+    background: var(--color-code-bg);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+
+  .post-content :global(pre code) {
+    background: none;
+    padding: 0;
+  }
+
+  .post-content :global(ul),
+  .post-content :global(ol) {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+  }
+
+  .post-content :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .post-content :global(blockquote) {
+    border-left: 4px solid var(--color-accent);
+    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .post-header h1 {
+      font-size: 2rem;
+    }
+
+    .post-content {
+      font-size: 1rem;
+    }
+  }
+</style>
